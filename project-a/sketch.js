@@ -19,7 +19,9 @@ let r2=10
 function setup() {}
 
 function draw() {
-  createCanvas(800, 500);
+  let canvas=createCanvas(800,500);
+   canvas.id("p5-canvas");
+   canvas.parent("p5-canvas-container");
   background(18, 170, 240);
 
   for (let i = 0; i <= width; i += 40) {
