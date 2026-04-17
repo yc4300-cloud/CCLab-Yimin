@@ -1,85 +1,45 @@
-let cloud;
+let c = [];
+let r = [];//array
+let thunder;
+function preload() {
+  thunder = loadSound("thunder.mp3")
+}
 function setup() {
   createCanvas(400, 400);
-  cloud = new Cloud();
+  //thunder.play();
 }
-
+function mousePressed() {
+  c.push(new Cloud(mouseX, mouseY, random(0.5, 1)));
+}
 function draw() {
   background(220);
-  cloud.update();
-  cloud.display();
+  // if(mouseIsPressed){
+  //   r.push(new Rain(mouseX, mouseY));
+  // }
+  for (let i = 0; i < r.length; i++) {
+    r[i].updateRain();
+    r[i].displayRain();
+    if (r[i].isOut) {
+      r.splice(i, 1);
+    }
+  }
+  //console.log(r.length);
+
+  for (let i = 0; i < c.length; i++) {
+    for (let j = 0; j < c.length; j++) {
+      if (i != j) {
+        c[i].checkCollision(c[j]);
+      }
+    }
+    if (c[i].isRaining) {
+      r.push(new Rain(c[i].x, c[i].y), c[i].h);
+    }
+    c[i].update();
+    c[i].display();
+    if (c[i].isOut) {
+      c.splice(i, 1);
+    }
+
+  }
+  //console.log(c.length);
 }
-
-class Cloud {
-  //constructor is like the setup
-  constructor() {
-    this.x = width / 2;
-    this.y = height / 2;
-    this.x0 = this.x;
-    this.y0 = this.y;
-    this.s = 1;
-  }
-  //what it will draw the cloud
-  display() {
-    push();
-    translate(this.x, this.y);
-    scale(this.s);
-    this.drawRightArm();
-    this.drawLeftArm();
-    noStroke();
-    //body
-    circle(0, 0, 100);
-    //circles around
-    for (let a = 0; a < 2 * PI; a += PI / 6) {
-      push();
-      rotate(a);
-      circle(50, 30, 50);
-      pop();
-    }
-    //eyes
-    fill(0);
-    circle(-30, 0, 5);
-    circle(30, 0, 5);
-    arc(0, 0, 30, 30, 0, PI);
-    pop();
-  }
-  //updating the variables
-  update() {
-    //this.y = noise(frameCount * 0.01) * height;
-    this.y = 30*sin(frameCount * 0.1);
-    this.x = 30*cos(frameCount * 0.1);
-    this.s = map(sin(frameCount * 0.05), -1, 1, 0.5, 1);
-
-  }
-   drawRightArm() {
-    //Right arm
-    push();
-    beginShape();
-    let lineLength = 110;
-    noFill();
-    for (let i = 0; i <= lineLength; i += lineLength / 20) {
-      strokeWeight(10);
-      let v = 15 * sin(frameCount * 0.1 - i / 20);
-      vertex(i, v);
-    }
-    endShape();
-    pop();
-  }
-  
-  drawLeftArm() {
-    //Left arm
-    push();
-    scale(-1,1);  //this is like a mirror!
-    beginShape();
-    let lineLength = 110;
-    noFill();
-    for (let i = 0; i <= lineLength; i += lineLength / 20) {
-      strokeWeight(10);
-      let v = 15 * sin(frameCount * 0.1 - i / 20);
-      vertex(i, v);
-    }
-    endShape();
-    pop();
-  }
-}
-
