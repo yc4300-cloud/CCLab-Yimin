@@ -22,7 +22,7 @@ let showBeaver = false;
 function preload() {
   img = loadImage("hopperV2.png");
   faceMesh = ml5.faceMesh(options);
-  jiao = loadSound("Beaver.mp3");
+  jiao = loadSound("beaver.mp3");
 }
 
 function setup() {
