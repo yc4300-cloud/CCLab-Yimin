@@ -20,7 +20,7 @@ let angle = 0;
 let showBeaver = false;
 
 function preload() {
-  img = loadImage("hopper.png");
+  img = loadImage("hopperV2.png");
   faceMesh = ml5.faceMesh(options);
   jiao = loadSound("Beaver.mp3");
 }
