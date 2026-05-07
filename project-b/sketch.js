@@ -26,13 +26,13 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(800, 400);
+  createCanvas(windowWidth, windowHeight);
   jiao.loop(); // Loop the sound
   jiao.setVolume(0); // Start silent
   userStartAudio();
   river = new River(height / 1.2);
   cam = createCapture(VIDEO);
-  cam.size(800, 400);
+  cam.size(windowWidth, windowHeight);
   cam.hide();
   faceMesh.detectStart(cam, gotFaces);
 
